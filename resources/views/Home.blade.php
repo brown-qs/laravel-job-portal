@@ -74,14 +74,15 @@
         <div class="col-sm-12 col-md-3 mr-auto">
 
           <div class="card mb-4">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between">
               <p class="font-weight-bold"><i class="fas fa-building"></i> Top Employers</p>
+              <a href="/company/create" class="btn secondary-btn">Create a Company</a>
             </div>
             <div class="card-body">
               <div class="top-employers">
               @foreach ($topEmployers as $employer)
                 <div class="top-employer">
-                  <a href="{{route('account.employer',['employer'=>$employer])}}">
+                  <a href="{{route('company.employer',['employer'=>$employer])}}">
                     <img src="{{asset($employer->logo)}}" width="60px" class="img-fluid" alt="">
                   </a>
                 </div> 

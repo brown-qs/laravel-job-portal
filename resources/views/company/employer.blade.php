@@ -1,4 +1,4 @@
-@extends('layouts.employer')
+@extends('layouts.post')
 
 @section('content')
   <div class="employer-content border">

@@ -17,7 +17,7 @@
               <div class="company-media">
                 <img src="{{asset($company->logo)}}" alt="" class="company-logo">
                 <div>
-                  <a href="{{route('account.employer',['employer'=>$company])}}" class="secondary-link">
+                  <a href="{{route('company.employer',['employer'=>$company])}}" class="secondary-link">
                     <p class="font-weight-bold">{{$company->title}}</p>
                     <p class="company-category">{{$company->getCategory->category_name}}</p>
                   </a>
@@ -117,8 +117,7 @@
               <hr>
               <div class="d-flex justify-content-between">
                 <div>
-                  <a href="{{route('account.applyJob',['post_id'=>$post])}}" class="btn primary-btn">Apply now</a>
-                  <a href="{{route('savedJob.store',['id'=>$post])}}" class="btn primary-outline-btn"><i class="fas fa-star"></i> Save job</a>
+                  <a href="#" class="btn primary-btn">Apply now</a>
                 </div>
                 <div class="social-links">
                   <a href="https://www.facebook.com"  target="_blank" class="btn btn-primary"><i class="fab fa-facebook"></i></a>
@@ -138,8 +137,7 @@
           </div>
           <div class="card-body">
             <div class="btn-group w-100">
-              <a href="{{route('account.applyJob',['post_id'=>$post->id])}}" class="btn primary-outline-btn float-left">Apply Now</a>
-              <a href="{{route('savedJob.store',['id'=>$post->id])}}" class="btn primary-btn"><i class="fas fa-star"></i> Save job</a>
+              <a href="#" class="btn primary-outline-btn float-left">Apply Now</a>
             </div>
           </div>
         </div>

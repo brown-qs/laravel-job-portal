@@ -17,10 +17,6 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        if (auth()->user()->company) {
-            Alert::toast('You already have a company!', 'info');
-            return $this->edit();
-        }
         $categories = CompanyCategory::all();
         return view('company.create', compact('categories'));
     }
@@ -38,10 +34,10 @@ class CompanyController extends Controller
         $company = new Company();
         if ($this->companySave($company, $request)) {
             Alert::toast('Company created! Now you can add posts.', 'success');
-            return redirect()->route('account.authorSection');
+            return redirect()->route('post.create');
         }
         Alert::toast('Failed!', 'error');
-        return redirect()->route('account.authorSection');
+        return redirect()->route('job.index');
     }
 
     /**
@@ -50,9 +46,9 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        $company = auth()->user()->company;
+        $company = Company::find($id);
         $categories = CompanyCategory::all();
         return view('company.edit', compact('company', 'categories'));
     }
@@ -62,13 +58,13 @@ class CompanyController extends Controller
     {
         $this->validateCompanyUpdate($request);
 
-        $company = auth()->user()->company;
+        $company = Company::find($id);
         if ($this->companyUpdate($company, $request)) {
             Alert::toast('Company created!', 'success');
-            return redirect()->route('account.authorSection');
+            return redirect()->route('post.create');
         }
         Alert::toast('Failed!', 'error');
-        return redirect()->route('account.authorSection');
+        return redirect()->route('job.index');
     }
 
     protected function validateCompany(Request $request)
@@ -95,7 +91,6 @@ class CompanyController extends Controller
     }
     protected function companySave(Company $company, Request $request)
     {
-        $company->user_id = auth()->user()->id;
         $company->title = $request->title;
         $company->description = $request->description;
         $company->company_category_id = $request->category;
@@ -129,7 +124,6 @@ class CompanyController extends Controller
 
     protected function companyUpdate(Company $company, Request $request)
     {
-        $company->user_id = auth()->user()->id;
         $company->title = $request->title;
         $company->description = $request->description;
         $company->company_category_id = $request->category;
@@ -168,12 +162,21 @@ class CompanyController extends Controller
         return $actualFileName . time() . '.' . $fileExtension;
     }
 
-    public function destroy()
+    public function show($employer)
     {
-        Storage::delete('public/companies/logos/' . basename(auth()->user()->company->logo));
-        if (auth()->user()->company->delete()) {
-            return redirect()->route('account.authorSection');
+        $company = Company::find($employer)->with('posts')->first();
+        return view('company.employer')->with([
+            'company' => $company,
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $company = Company::find($id);
+        Storage::delete('public/companies/logos/' . basename($company->logo));
+        if ($company->delete()) {
+            return redirect()->route('job.index');
         }
-        return redirect()->route('account.authorSection');
+        return redirect()->route('job.index');
     }
 }

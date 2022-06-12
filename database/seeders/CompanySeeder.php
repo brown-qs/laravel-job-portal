@@ -48,7 +48,6 @@ class CompanySeeder extends Seeder
                 'education' => 'master',
             ],
         ];
-        //user id is 2 that has author role
         $company = Company::factory()->create([
             'company_category_id' => 1,
             'title' => 'Gabrato company',

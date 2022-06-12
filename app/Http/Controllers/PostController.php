@@ -25,23 +25,26 @@ class PostController extends Controller
 
     public function create()
     {
-        if (!auth()->user()->company) {
+        $companies = Company::all();
+        if ($companies->count() == 0) {
             Alert::toast('You must create a company first!', 'info');
             return redirect()->route('company.create');
         }
-        return view('post.create');
+        return view('post.create')->with([
+            'allCompanies' => $companies,
+        ]);
     }
 
     public function store(Request $request)
     {
         $this->requestValidate($request);
 
-        $postData = array_merge(['company_id' => auth()->user()->company->id], $request->all());
+        $postData = $request->all();
 
         $post = Post::create($postData);
         if ($post) {
             Alert::toast('Post listed!', 'success');
-            return redirect()->route('account.authorSection');
+            return redirect()->to('job/'.$post->id);
         }
         Alert::toast('Post failed to list!', 'warning');
         return redirect()->back();
@@ -77,7 +80,7 @@ class PostController extends Controller
         $newPost = $getPost->update($request->all());
         if ($newPost) {
             Alert::toast('Post successfully updated!', 'success');
-            return redirect()->route('account.authorSection');
+            return redirect()->route('job.index');
         }
         return redirect()->route('post.index');
     }
@@ -86,7 +89,7 @@ class PostController extends Controller
     {
         if ($post->delete()) {
             Alert::toast('Post successfully deleted!', 'success');
-            return redirect()->route('account.authorSection');
+            return redirect()->route('job.index');
         }
         return redirect()->back();
     }

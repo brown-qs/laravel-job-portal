@@ -22,7 +22,6 @@ class CompanyFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => 2, //default author by user seeder class
             'company_category_id' => 1,
             'logo' => 'images/companies/logos/',
             'title' => 'Web App developer',

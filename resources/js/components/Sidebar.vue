@@ -1,5 +1,6 @@
 <template>
   <div>
+    <a class="btn btn-primary btn-block mb-4" href="/post/create">Post a Job</a>
     <div class="card p-0 m-0">
       <div class="card-body p-3">
         <div class="d-flex align-items-center small mb-0">

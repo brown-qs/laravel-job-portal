@@ -1,4 +1,4 @@
-@extends('layouts.account')
+@extends('layouts.post')
 
 @section('content')
   <div class="account-layout border">
@@ -94,7 +94,7 @@
         <div class="line-divider"></div>
         <div class="mt-3">
           <button type="submit" class="btn primary-btn">Update company</button>
-          <a href="{{route('account.authorSection')}}" class="btn primary-outline-btn">Cancel</a>
+          <a href="{{route('job.index')}}" class="btn primary-outline-btn">Cancel</a>
         </div>
       </form>
     </div>
